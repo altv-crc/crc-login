@@ -1,0 +1,95 @@
+<rml>
+    <head>
+        <title>CRC Login</title>
+        <style>
+            body {
+                width: 100vw;
+                height: 100vh;
+                position: absolute;
+            }
+
+            .input-wrapper {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                font-family: inter-black;
+                min-width: 300px;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .top-center {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100%;
+                justify-content: center;
+            }
+
+            .placeholder {
+                font-size: 14px;
+                padding-bottom: 6px;
+                padding-left: 3px;
+                opacity: 1;
+            }
+
+            input {
+                width: 100%;
+                padding: 6px;
+                background: #1a1a1a;
+                color: #cacaca;
+                box-sizing: border-box;
+                border: 1px #393636e2;
+                margin-bottom: 24px;
+                font-size: 12px;
+                font-family: inter-bold;
+            }
+
+            input:focus {
+                border-color: #5bdeff;
+            }
+
+            .button {
+                width: 100%;
+                background: #1a1a1a;
+                border: 1px #393636e2;
+                color: white;
+                padding: 12px;
+                text-align: center;
+                box-sizing: border-box;
+                cursor: pointer;
+                margin-top: 6px;
+                font-weight: bold;
+            }
+
+            .button:hover {
+                cursor: pointer;
+                border-color: #5bdeff;
+                color: #5bdeff;
+            }
+        </style>
+    </head>
+    <body id="body">
+        <div>
+            <div class="top-center">
+                <div>
+                    <div class="input-wrapper">
+                        <div id="placeholder" class="placeholder">Username</div>
+                        <input class="input" id="username" type="text" />
+                    </div>
+                </div>
+                <div>
+                    <div class="input-wrapper">
+                        <div id="placeholder" class="placeholder">Password</div>
+                        <input class="input" id="password" type="password" />
+                    </div>
+                </div>
+                <div>
+                    <div class="input-wrapper">
+                        <button class="button" id="submit" type="submit">Login / Register</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</rml>
