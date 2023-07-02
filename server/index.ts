@@ -14,6 +14,8 @@ alt.log(`~c~[CRC] Login Started`);
 
 alt.on('playerConnect', (player: alt.Player) => {
     loginRequest[player.id] = true;
+    player.dimension = player.id + 1;
+    player.visible = false;
     player.frozen = true;
     player.pos = new alt.Vector3(0, 0, 100);
     player.emit('crc-login-request-auth');
@@ -63,6 +65,17 @@ alt.onClient('crc-login-or-register', async (player: alt.Player, username: strin
 
     alt.log(`Authorized: ${account.username}`);
 
+    player.dimension = 0;
+
     // player: alt.Player, account: { _id: string, username: string, password: string }
     alt.emit('crc-login-finish', player, account);
+});
+
+alt.on('crc-login-finish', (player: alt.Player, account) => {
+    player.frozen = false;
+    player.model = 'mp_m_freemode_01';
+    player.visible = true;
+    player.spawn(0, 0, 72);
+
+    console.log(account);
 });

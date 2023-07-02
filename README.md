@@ -8,6 +8,7 @@ Does not provide any account recovery methods. Just a simple login with username
 
 ## Requires
 
+- [crc-db](https://github.com/altv-crc/crc-db)
 - [alt:V TypeScript Project](https://github.com/Stuyk/altv-typescript)
 - [alt:V Cross Resource Cache](https://github.com/altv-crc/lib-cross-resource-cache)
 - [VSCode - alt:V Event Suggestions](https://marketplace.visualstudio.com/items?itemName=stuyk.altv-event-suggestions)
@@ -43,7 +44,7 @@ resources = [
 
 1. Listen for `crc-login-finish` event.
 
-When a bearer token is passed from a `client` you will get general Discord information through an `alt.on` event.
+When a bearer token is passed from a `client` you will get general account information through an `alt.on` event.
 
 You should be listening to this event from some other resource.
 
@@ -51,14 +52,16 @@ You should be listening to this event from some other resource.
 interface Account {
     // MongoDB Document ID
     _id: string;
-    // Discord Data
-    id: string;
+    // Account Data
     username: string;
-    discriminator: number;
+    password: string;
 }
 
-alt.on('crc-discord-login-finish', (player: alt.Player, account: Account) => {
-    // code goes here
+alt.on('crc-login-finish', (player: alt.Player, account: Account) => {
+    player.frozen = false;
+    player.model = 'mp_m_freemode_01';
+    player.visible = true;
+    player.spawn(0, 0, 72);
 });
 ```
 
