@@ -17,6 +17,10 @@ function drawTemporaryText(msg: string, timeout: number) {
     alt.setTimeout(() => everyTick.destroy(), timeout);
 }
 
+function handleError(msg: string) {
+    drawTemporaryText(msg, 3000);
+}
+
 function onSubmit() {
     const username = document.getElementByID('username').getAttribute('value');
     const password = document.getElementByID('password').getAttribute('value');
@@ -26,7 +30,7 @@ function onSubmit() {
     native.playSoundFrontend(-1, 'SELECT', 'HUD_FRONTEND_MP_SOUNDSET', true);
 }
 
-alt.onServer('crc-login-request-auth', async () => {
+alt.onceServer('crc-login-request-auth', async () => {
     native.triggerScreenblurFadeIn(0);
     native.invalidateIdleCam();
     native.invalidateCinematicVehicleIdleMode();
@@ -59,11 +63,9 @@ alt.onServer('crc-login-request-auth', async () => {
     });
 });
 
-alt.onServer('crc-login-failed', (msg: string) => {
-    drawTemporaryText(msg, 3000);
-});
+alt.onceServer('crc-login-done', () => {
+    alt.offServer('crc-login-failed', handleError);
 
-alt.onServer('crc-login-done', () => {
     native.triggerScreenblurFadeOut(1000);
     native.clearTimecycleModifier();
     native.displayRadar(true);
@@ -75,6 +77,8 @@ alt.onServer('crc-login-done', () => {
     document.destroy();
     document = undefined;
 });
+
+alt.onServer('crc-login-failed', handleError);
 
 try {
     alt.loadRmlFont('/client/rmlui/fonts/inter-regular.ttf', 'inter-regular', false, false);
