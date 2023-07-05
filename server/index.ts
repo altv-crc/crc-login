@@ -70,12 +70,3 @@ alt.onClient('crc-login-or-register', async (player: alt.Player, username: strin
     // player: alt.Player, account: { _id: string, username: string, password: string }
     alt.emit('crc-login-finish', player, account);
 });
-
-alt.on('crc-login-finish', (player: alt.Player, account) => {
-    player.frozen = false;
-    player.model = 'mp_m_freemode_01';
-    player.visible = true;
-    player.spawn(0, 0, 72);
-
-    console.log(account);
-});
