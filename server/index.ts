@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import * as crc from '@stuyk/cross-resource-cache';
-import * as I from '../shared/interfaces';
+import { Account } from 'alt-crc';
 
 const COLLECTION_NAME = 'account';
 const loginRequest: { [id: string]: boolean } = {};
@@ -30,12 +30,12 @@ alt.on('playerDisconnect', (player: alt.Player) => {
  *
  * @param {string} username
  * @param {string} password
- * @return {Promise<I.Account>}
+ * @return {Promise<Account>}
  */
 async function createAccount(username: string, password: string) {
     const passwordHash = crc.utility.password.create(password);
-    const documentID = await crc.database.create<I.Account>({ username, password: passwordHash }, COLLECTION_NAME);
-    return await crc.database.get<I.Account>({ _id: documentID }, COLLECTION_NAME);
+    const documentID = await crc.database.create<Account>({ username, password: passwordHash }, COLLECTION_NAME);
+    return await crc.database.get<Account>({ _id: documentID }, COLLECTION_NAME);
 }
 
 alt.onClient('crc-login-or-register', async (player: alt.Player, username: string, password: string) => {
@@ -50,7 +50,7 @@ alt.onClient('crc-login-or-register', async (player: alt.Player, username: strin
     }
 
     // Lookup account by username
-    let account: I.Account = await crc.database.get<I.Account>({ username }, COLLECTION_NAME);
+    let account: Account = await crc.database.get<Account>({ username }, COLLECTION_NAME);
     if (!account) {
         account = await createAccount(username, password);
     }

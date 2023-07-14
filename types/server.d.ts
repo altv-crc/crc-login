@@ -3,6 +3,6 @@ import { Account } from '../shared/interfaces';
 
 declare module 'alt-server' {
     interface ICustomEmitEvent {
-        'crc-login-finish': <T = Account>(player: alt.Player, account: T) => void;
+        'crc-login-finish': (player: alt.Player, account: Account) => void;
     }
 }
